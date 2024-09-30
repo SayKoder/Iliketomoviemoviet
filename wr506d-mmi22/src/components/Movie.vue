@@ -1,0 +1,16 @@
+<script lang="js" setup>
+const message = "Bienvenue sur la page des films";
+</script>
+
+<template>
+  <div>
+    <h1>{{ message }}</h1>
+    <p>Liste des films à venir...</p>
+  </div>
+</template>
+
+<style scoped>
+h1 {
+  color: #42b983;
+}
+</style>
