@@ -4,6 +4,7 @@
 <template>
     <div class="wrapper">
 
+
         <nav>
             <ul>
                 <li><router-link to="/" exact>Accueil</router-link></li>
@@ -47,5 +48,4 @@ nav ul li:last-child {
 .wrapper .logo {
     margin-right: 20px; 
 }
-
 </style>

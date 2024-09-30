@@ -15,6 +15,7 @@ import NavView from './views/NavView.vue'
 <style scoped>
 header {
   line-height: 1.5;
+
 }
 
 .logo {
