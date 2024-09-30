@@ -3,15 +3,13 @@
 
 <template>
     <div class="wrapper">
-
-
         <nav>
             <ul>
                 <li><router-link to="/" exact>Accueil</router-link></li>
                 <li><router-link to="/movies">Movies</router-link></li>
-                <li><router-link to="/">Actor</router-link></li>
-                <li><router-link to="/">Catégories</router-link></li>
-                <li><router-link to="/">Profil</router-link></li>
+                <li><router-link to="/actors">Actor</router-link></li>
+                <li><router-link to="/categories">Catégories</router-link></li>
+                <li><router-link to="/profil">Profil</router-link></li>
             </ul>
         </nav>
     </div>
@@ -24,8 +22,8 @@
     align-items: center;
     padding: 12px;
     border-radius: 70px;
-    background-color: #f3f3f3;
-    border-bottom: 4px solid #b2b2b2;
+    background-color: #a04545;
+    border-bottom: 4px solid #5f1b1b;
 }
 
 nav ul {
@@ -42,10 +40,16 @@ nav ul li {
 }
 
 nav ul li:last-child {
-    margin-left: auto;
+    margin-left: 30px;
 }
 
 .wrapper .logo {
     margin-right: 20px; 
+}
+
+a {
+    text-decoration: none;
+    color: white;
+    box-shadow: inset 0 -2px 0 0 rgb(255, 226, 146);
 }
 </style>
