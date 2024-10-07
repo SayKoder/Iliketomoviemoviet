@@ -1,10 +1,13 @@
 <script setup>
+import LatestMovies from './MovieCard.vue'
+import LatestActors from './ActorCard.vue'
 
 </script>
 
 <template>
   <div id="homepage">
-    Bienvenur sur la page d'accueil
+    <LatestMovies />
+    <LatestActors />
   </div>
 
 </template>
