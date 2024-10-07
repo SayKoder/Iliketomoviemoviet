@@ -7,7 +7,9 @@ import ActorCard from '../components/ActorCard.vue'
 const route = useRoute()
 const movieId = ref(route.params.id)
 const movieDetails = ref(null)
-const message = 'Bienvenue sur la page des détails'
+
+let selectedActor = ref(null)
+const message = 'Bienvenue sur la page des détails des films'
 
 onMounted(async () => {
   try {
@@ -25,7 +27,7 @@ onMounted(async () => {
   <div>
     <button @click="$router.go(-1)">Retour</button>
     <h1>{{ message }}</h1>
-    <div v-if="movieDetails">
+    <div class="detailMovie" v-if="movieDetails">
       <h2>{{ movieDetails.title }}</h2>
       <img v-if="movieDetails.media" :src="movieDetails.media" alt="Affiche du film" />
       <p>{{ movieDetails.description }}</p>
@@ -59,5 +61,28 @@ button {
 
 button:hover {
   background-color: red; /* Couleur de fond rouge au survol */
+}
+
+.detailMovie {
+  flex: 1;
+  max-width: 22%;
+  background-color: #f4f4f4;
+  padding: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  text-align: center;
+  transition: transform 0.3s;
+}
+
+.detailMovie:hover {
+  transform: scale(1.05);
+  transition: transform 0.3s;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 5px;
+  margin-bottom: 10px;
 }
 </style>
