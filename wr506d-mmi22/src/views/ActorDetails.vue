@@ -4,12 +4,9 @@ import { useRoute } from 'vue-router'
 import axios from 'axios'
 
 const route = useRoute()
-const movieId = ref(route.params.id)
-const movieDetails = ref(null)
-const actors = ref([])
-
-let selectedActor = ref(null)
-const message = 'Bienvenue sur la page des détails des films'
+const actorId = ref(route.params.id)
+const actorDetails = ref(null)
+const movies = ref([])
 
 const formatDate = (dateString: string, format: string = 'iso') => {
   const date = new Date(dateString)
@@ -21,21 +18,23 @@ const formatDate = (dateString: string, format: string = 'iso') => {
   }
 }
 
+let selectedMovie = ref(null)
+const message = 'Bienvenue sur la page des détails des acteurs'
+
 onMounted(async () => {
   try {
     const response = await axios.get(
-      `http://symfony.mmi-troyes.fr:8319/api/movies/${movieId.value}`
+      `http://symfony.mmi-troyes.fr:8319/api/actors/${actorId.value}`
     )
-    console.log(response.data)
-    movieDetails.value = response.data //Stockage des détails du film
-    const actorDetails = movieDetails.value.actors.map(async (actorUrl: string) => {
-      const actorResponse = await axios.get(`http://symfony.mmi-troyes.fr:8319${actorUrl}`)
-      return actorResponse.data
+    actorDetails.value = response.data //Stockage des détails acteurs
+    const movieDetails = actorDetails.value.movies.map(async (movieUrl: string) => {
+      const movieResponse = await axios.get(`http://symfony.mmi-troyes.fr:8319${movieUrl}`)
+      return movieResponse.data
     })
 
-    actors.value = await Promise.all(actorDetails) //Stockage des détails des acteurs
+    movies.value = await Promise.all(movieDetails) //Stockage des détails des films
   } catch (error) {
-    console.error('Erreur lors de la récupération des détails du film : ', error)
+    console.error('Erreur lors de la récupération des détails des acteurs : ', error)
   }
 })
 </script>
@@ -44,28 +43,25 @@ onMounted(async () => {
   <div>
     <button @click="$router.go(-1)">Retour</button>
     <h1>{{ message }}</h1>
-    <div class="detailMovie" v-if="movieDetails">
+    <div class="detailActor" v-if="actorDetails">
       <div class="left-column">
-        <h2>{{ movieDetails.title }}</h2>
-        <img v-if="movieDetails.media" :src="movieDetails.media" alt="Affiche du film" />
-        <p>{{ movieDetails.description }}</p>
-        <p><strong>Date de sortie :</strong> {{ formatDate(movieDetails.releaseDate, 'long') }}</p>
-        <p><strong>Genre :</strong> {{ movieDetails.genre }}</p>
+        <h2>{{ actorDetails.firstname }} {{ actorDetails.lastname }}</h2>
+        <img v-if="actorDetails.media" :src="actorDetails.media" alt="Affiche des acteurs" />
+        <p>{{ actorDetails.bio }}</p>
       </div>
       <div class="right-column">
-        <p><strong>Acteurs du film :</strong></p>
-        <ul v-if="actors.length > 0">
-          <li v-for="actor in actors" :key="actor.id">
-            <h3 class="titre-actor">{{ actor.firstname }} {{ actor.lastname }}</h3>
-            <img
-              class="img-actor"
-              v-if="actor.media"
-              :src="actor.media"
-              alt="Affiche de l'acteur"
-            />
+        <p><strong>Date de naissance :</strong> {{ formatDate(actorDetails.dob, 'long') }}</p>
+        <p><strong>Nationalité :</strong> {{ actorDetails.nationality }}</p>
+        <p><strong>Genre :</strong> {{ actorDetails.gender }}</p>
+        <p><strong>Récompenses :</strong> {{ actorDetails.awards }}</p>
+        <p><strong>Films :</strong></p>
+        <ul v-if="movies.length > 0">
+          <li v-for="movie in movies" :key="movie.id">
+            <h3 class="titre-movie">{{ movie.title }}</h3>
+            <img class="img-movie" v-if="movie.media" :src="movie.media" alt="Affiche du film" />
           </li>
         </ul>
-        <p v-else>Aucun acteur</p>
+        <p v-else>Dans aucun film</p>
       </div>
     </div>
     <p v-else>Chargement des détails...</p>
@@ -75,6 +71,7 @@ onMounted(async () => {
 <style scoped>
 h1 {
   color: #42b983;
+  margin-bottom: 20px;
 }
 
 h2 {
@@ -90,15 +87,15 @@ button {
   border: none;
   border-radius: 10px;
   cursor: pointer;
-  transition: background-color 0.3s ease; /* Animation de transition */
+  transition: background-color 0.3s ease;
   margin-top: 6%;
 }
 
 button:hover {
-  background-color: red; /* Couleur de fond rouge au survol */
+  background-color: red;
 }
 
-.detailMovie {
+.detailActor {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
@@ -111,7 +108,7 @@ button:hover {
   margin: auto;
 }
 
-.detailMovie:hover {
+.detailActor:hover {
   transform: scale(1.05);
   transition: transform 0.3s;
 }
@@ -149,14 +146,14 @@ li {
   color: black;
 }
 
-.img-actor {
+.img-movie {
   max-width: 100%;
   height: auto;
   border-radius: 5px;
   margin-bottom: 10px;
 }
 
-.titre-actor {
+.titre-movie {
   font-size: 20px;
   color: #4b2109;
 }
