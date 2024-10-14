@@ -1,5 +1,5 @@
-<script lang="ts" setup>
-import axios from 'axios'
+<script setup>
+import { useRouter } from 'vue-router'
 import { onMounted, ref, computed } from 'vue'
 import MovieCard from '../components/MovieCard.vue'
 
@@ -7,6 +7,11 @@ const message = 'Bienvenue sur la page des films'
 const searchQuery = ref('')
 
 const recup = ref([])
+const router = useRouter()
+
+const goToDetails2 = (movieId) => {
+  router.push(`/movies/${movieId}`)
+}
 
 const filteredMovies = computed(() => {
   return movies.filter((movie) =>
@@ -18,6 +23,7 @@ const filteredMovies = computed(() => {
 <template>
   <div>
     <h1>{{ message }}</h1>
+
     <input
       type="text"
       v-model="searchQuery"
@@ -25,18 +31,21 @@ const filteredMovies = computed(() => {
       class="search-bar"
     />
     <p>Liste des films :</p>
-    <MovieCard>
-      <template v-slot:default="{ movies }">
-        <div class="movies-container">
-          <ul v-if="movies.length > 0" class="movies-container">
-            <li v-for="movie in movies" :key="movie.id" class="movie-card">
-              <h3>{{ movie.title }}</h3>
-              <img v-if="movie.media" :src="movie.media" alt="Affiche du film" />
-              <p>{{ movie.description }}</p>
-            </li>
-          </ul>
+
+    <MovieCard v-slot="{ movies }">
+      <div v-if="movies.length > 0" class="movies-container">
+        <div
+          v-for="movie in movies"
+          :key="movie.id"
+          class="movie-card"
+          @click="goToDetails2(movie.id)"
+        >
+          <h3>{{ movie.title }}</h3>
+          <img v-if="movie.media" :src="movie.media" alt="Affiche du film" />
+          <p>{{ movie.description }}</p>
         </div>
-      </template>
+      </div>
+      <p v-else>Aucun film trouvé</p>
     </MovieCard>
   </div>
 </template>
