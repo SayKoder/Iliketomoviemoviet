@@ -1,11 +1,11 @@
 <script lang="js" setup>
-const message = "Bienvenue sur la page des films";
+const message = "Bienvenue sur la page des acteurs";
 </script>
 
 <template>
   <div>
     <h1>{{ message }}</h1>
-    <p>Liste des films à venir...</p>
+    <p>Liste des acteurs à venir...</p>
   </div>
 </template>
 
