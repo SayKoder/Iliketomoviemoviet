@@ -12,9 +12,8 @@ const router = useRouter()
 const goToDetails2 = (movieId) => {
   router.push(`/movies/${movieId}`)
 }
-
 const filteredMovies = computed(() => {
-  return movies.filter((movie) =>
+  return recup.value.filter((movie) =>
     movie.title.toLowerCase().includes(searchQuery.value.toLowerCase())
   )
 })
