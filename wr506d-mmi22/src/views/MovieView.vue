@@ -1,6 +1,6 @@
 <script setup>
 import { useRouter } from 'vue-router'
-import { onMounted, ref, computed } from 'vue'
+import { ref, computed } from 'vue'
 import MovieCard from '../components/MovieCard.vue'
 
 const message = 'Bienvenue sur la page des films'
@@ -9,7 +9,7 @@ const searchQuery = ref('')
 const recup = ref([])
 const router = useRouter()
 
-const goToDetails2 = (movieId) => {
+const goToDetails = (movieId) => {
   router.push(`/movies/${movieId}`)
 }
 
@@ -38,7 +38,7 @@ const filteredMovies = computed(() => {
           v-for="movie in filteredMovies"
           :key="movie.id"
           class="movie-card"
-          @click="goToDetails2(movie.id)"
+          @click="goToDetails(movie.id)"
         >
           <h3>{{ movie.title }}</h3>
           <img v-if="movie.media" :src="movie.media" alt="Affiche du film" />
@@ -86,18 +86,6 @@ h1 {
 .movie-card:hover {
   transform: scale(1.05);
   transition: transform 0.3s;
-}
-
-ul {
-  display: flex;
-  list-style: none;
-  padding: 0;
-}
-
-li {
-  margin: 5px 0;
-  padding: 5px;
-  color: black;
 }
 
 img {
