@@ -12,6 +12,7 @@ const router = useRouter()
 const goToDetails2 = (movieId) => {
   router.push(`/movies/${movieId}`)
 }
+
 const filteredMovies = computed(() => {
   return recup.value.filter((movie) =>
     movie.title.toLowerCase().includes(searchQuery.value.toLowerCase())
@@ -31,10 +32,10 @@ const filteredMovies = computed(() => {
     />
     <p>Liste des films :</p>
 
-    <MovieCard v-slot="{ movies }">
-      <div v-if="movies.length > 0" class="movies-container">
+    <MovieCard v-slot="{ movies: filteredMovies }">
+      <div v-if="filteredMovies.length > 0" class="movies-container">
         <div
-          v-for="movie in movies"
+          v-for="movie in filteredMovies"
           :key="movie.id"
           class="movie-card"
           @click="goToDetails2(movie.id)"

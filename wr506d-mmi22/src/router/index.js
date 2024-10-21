@@ -4,7 +4,7 @@ import MovieView from '../views/MovieView.vue'
 
 import ActorView from '../views/ActorView.vue'
 import CategoriesView from '../views/CategoriesView.vue'
-import ProfilView from '../views/ProfilView.vue'
+import ConnexionView from '../views/ConnexionView.vue'
 import MovieCard from '@/components/MovieCard.vue'
 import MovieDetails from '@/views/MovieDetails.vue'
 import ActorDetails from '@/views/ActorDetails.vue'
@@ -33,9 +33,9 @@ const router = createRouter({
       component: CategoriesView
     },
     {
-      path: '/profil',
-      name: 'profil',
-      component: ProfilView
+      path: '/connexion',
+      name: 'connexion',
+      component: ConnexionView
     },
     {
       path: '/',
