@@ -17,8 +17,6 @@ const goToDetails2 = (movieId) => {
 <template>
   <div id="homepage">
     <h1>Page d'accueil</h1>
-
-    <!-- Utilisation de LatestMovies pour afficher les films -->
     <MovieCard v-slot="{ movies }">
       <div v-if="movies.length > 0" class="movies-container">
         <div

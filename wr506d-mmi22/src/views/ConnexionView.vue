@@ -7,7 +7,7 @@ import { useRouter } from 'vue-router'
 const email = ref('')
 const password = ref('')
 const message = ref('Bienvenue sur la page de connexion')
-const conmsg = ref('Connexion')
+const conmsg = ref('Déconnexion')
 const errorMessage = ref('')
 const isLoggedIn = ref(false)
 const storedEmail = ref('')
@@ -20,7 +20,7 @@ onMounted(() => {
     isLoggedIn.value = true // L'utilisateur est connecté si un token existe
     storedEmail.value = localStorage.getItem('email') || ''
     message.value = 'Vous êtes déjà connecté !'
-    conmsg.value = 'Profile'
+    conmsg.value = 'Déconnexion'
   }
 })
 
@@ -40,7 +40,7 @@ const handleLogin = async () => {
       isLoggedIn.value = true
       storedEmail.value = email.value
       message.value = 'Vous êtes connecté !'
-      conmsg.value = 'Profile'
+      conmsg.value = 'déconnexion'
 
       router.push('/')
     }
@@ -64,7 +64,7 @@ const handleLogout = () => {
 </script>
 
 <template>
-  <div>
+  <div class="connexion-container">
     <h1>{{ message }}</h1>
 
     <div v-if="isLoggedIn">
@@ -85,6 +85,20 @@ const handleLogout = () => {
 <style scoped>
 h1 {
   color: #42b983;
+}
+
+.connexion-container {
+  display: flex;
+  flex-direction: column;
+  background-color: #f4f4f4;
+  padding: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  text-align: center;
+  gap: 20px;
+  max-width: 300px;
+  margin: auto;
+  margin-top: 50px;
 }
 
 #form-connexion {
