@@ -15,12 +15,10 @@ import NavView from './components/NavView.vue'
 <style scoped>
 header {
   line-height: 1.5;
-
 }
-
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
-
 </style>

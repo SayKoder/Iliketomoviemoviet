@@ -92,4 +92,8 @@ img {
   border-radius: 5px;
   margin-bottom: 10px;
 }
+
+p {
+  font-size: 30px;
+}
 </style>
