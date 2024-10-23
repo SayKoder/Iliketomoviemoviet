@@ -7,7 +7,7 @@ import { useRouter } from 'vue-router'
 const email = ref('')
 const password = ref('')
 const message = ref('Bienvenue sur la page de connexion')
-const conmsg = ref('Déconnexion')
+const conmsg = ref('Connexion')
 const errorMessage = ref('')
 const isLoggedIn = ref(false)
 const storedEmail = ref('')
@@ -17,7 +17,7 @@ const router = useRouter()
 onMounted(() => {
   const token = localStorage.getItem('token')
   if (token) {
-    isLoggedIn.value = true // L'utilisateur est connecté si un token existe
+    isLoggedIn.value = true
     storedEmail.value = localStorage.getItem('email') || ''
     message.value = 'Vous êtes déjà connecté !'
     conmsg.value = 'Déconnexion'
