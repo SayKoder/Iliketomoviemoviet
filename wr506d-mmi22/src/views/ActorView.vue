@@ -1,13 +1,17 @@
 <script setup>
 import { useRouter } from 'vue-router'
-import { ref, computed } from 'vue'
+import { ref } from 'vue'
+import axios from 'axios'
 import ActorCard from '../components/ActorCard.vue'
 
 const message = 'Bienvenue sur la page des acteurs'
 const searchQuery = ref('')
+
 const router = useRouter()
 const newActorFirstname = ref('')
 const newActorLastname = ref('')
+
+const selectedActor = ref(null)
 const recup = ref([])
 
 // Modals pour CRUD
@@ -66,16 +70,27 @@ async function deleteActor() {
   }
 }
 
-function openDeleteModal(actor) {
-  selectedActor.value = actor
-  showDeleteModal.value = true
-}
-
 function openEditModal(actor) {
   selectedActor.value = { ...actor }
   newActorFirstname.value = actor.firstname
   newActorLastname.value = actor.lastname
   showEditModal.value = true
+
+  // Vérifiez la présence de `createdAt`
+  console.log(
+    "Valeur de la catégorie sélectionnée lors de l'ouverture du modal :",
+    selectedActor.value
+  )
+
+  // Si `createdAt` est manquant, émettre un avertissement
+  if (!selectedActor.value.createdAt) {
+    console.warn('createdAt est manquant ou non défini')
+  }
+}
+
+function openDeleteModal(actor) {
+  selectedActor.value = actor
+  showDeleteModal.value = true
 }
 </script>
 
@@ -101,12 +116,16 @@ function openEditModal(actor) {
           )"
           :key="actor.id"
           class="actor-card"
-          @click="goToDetails(actor.id)"
         >
           <h3>{{ actor.firstname }} {{ actor.lastname }}</h3>
-          <img v-if="actor.media" :src="actor.media" alt="Photo de l'acteur" />
-          <button class="green-button" @click="openEditModal(actor)">Modifier</button>
-          <button class="red-button" @click="openDeleteModal(actor)">Supprimer</button>
+          <img
+            v-if="actor.media"
+            :src="actor.media"
+            @click="goToDetails(actor.id)"
+            alt="Photo de l'acteur"
+          />
+          <button class="green-button" @click.stop="openEditModal(actor)">Modifier</button>
+          <button class="red-button" @click.stop="openDeleteModal(actor)">Supprimer</button>
         </div>
       </div>
 
@@ -114,6 +133,14 @@ function openEditModal(actor) {
     </ActorCard>
 
     <button class="green-button" @click="showAddModal = true">Ajouter un acteur</button>
+
+    <div v-if="showDeleteModal" class="modal">
+      <div class="modal-content">
+        <p>Êtes-vous sûr de vouloir supprimer cette catégorie ?</p>
+        <button class="red-button" @click="deleteActor">Supprimer</button>
+        <button class="green-button" @click="showDeleteModal = false">Retour</button>
+      </div>
+    </div>
 
     <div v-if="showAddModal" class="modal">
       <div class="modal-content">
@@ -132,14 +159,6 @@ function openEditModal(actor) {
         <input v-model="newActorLastname" placeholder="Nom" />
         <button class="green-button" @click="updateActor">Modifier</button>
         <button class="red-button" @click="showEditModal = false">Annuler</button>
-      </div>
-    </div>
-
-    <div v-if="showDeleteModal" class="modal">
-      <div class="modal-content">
-        <p>Êtes-vous sûr de vouloir supprimer cet acteur ?</p>
-        <button class="red-button" @click="deleteActor">Supprimer</button>
-        <button class="green-button" @click="showDeleteModal = false">Retour</button>
       </div>
     </div>
   </div>
