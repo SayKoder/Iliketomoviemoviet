@@ -5,19 +5,78 @@ import ActorCard from '../components/ActorCard.vue'
 
 const message = 'Bienvenue sur la page des acteurs'
 const searchQuery = ref('')
-
-const recup = ref([])
 const router = useRouter()
+const newActorFirstname = ref('')
+const newActorLastname = ref('')
+const recup = ref([])
 
+// Modals pour CRUD
+const showDeleteModal = ref(false)
+const showEditModal = ref(false)
+const showAddModal = ref(false)
+
+//Fonction redirection détails acteurs
 const goToDetails = (actorId) => {
   router.push(`/actors/${actorId}`)
 }
 
-const filteredActors = computed(() => {
-  return recup.value.filter((actor) =>
-    actor.firstname.toLowerCase().includes(searchQuery.value.toLowerCase())
-  )
-})
+async function addActor() {
+  try {
+    const response = await axios.post('http://symfony.mmi-troyes.fr:8319/api/actors', {
+      firstname: newActorFirstname.value,
+      lastname: newActorLastname.value
+    })
+    recup.value.push(response.data)
+    newActorFirstname.value = ''
+    newActorLastname.value = ''
+    showAddModal.value = false
+  } catch (error) {
+    console.error("Erreur lors de l'ajout de l'acteur : ", error)
+  }
+}
+
+async function updateActor() {
+  try {
+    const response = await axios.put(
+      `http://symfony.mmi-troyes.fr:8319/api/actors/${selectedActor.value.id}`,
+      {
+        firstname: newActorFirstname.value,
+        lastname: newActorLastname.value
+      }
+    )
+    const index = actorsList.value.findIndex((actor) => actor.id === selectedActor.value.id)
+    actorsList.value[index] = response.data
+    selectedActor.value = null
+    newActorFirstname.value = ''
+    newActorLastname.value = ''
+    showEditModal.value = false
+  } catch (error) {
+    console.error("Erreur lors de la modification de l'acteur : ", error)
+  }
+}
+
+async function deleteActor() {
+  try {
+    await axios.delete(`http://symfony.mmi-troyes.fr:8319/api/actors/${selectedActor.value.id}`)
+    recup.value = recup.value.filter((actor) => actor.id !== selectedActor.value.id)
+    showDeleteModal.value = false
+    selectedActor.value = null
+  } catch (error) {
+    console.error("Erreur lors de la suppression de l'acteur : ", error)
+  }
+}
+
+function openDeleteModal(actor) {
+  selectedActor.value = actor
+  showDeleteModal.value = true
+}
+
+function openEditModal(actor) {
+  selectedActor.value = { ...actor }
+  newActorFirstname.value = actor.firstname
+  newActorLastname.value = actor.lastname
+  showEditModal.value = true
+}
 </script>
 
 <template>
@@ -32,20 +91,57 @@ const filteredActors = computed(() => {
     />
     <p>Liste des acteurs :</p>
 
-    <ActorCard v-slot="{ actors: filteredActors }">
-      <div v-if="filteredActors.length > 0" class="actors-container">
+    <ActorCard v-slot="{ actors }">
+      <div v-if="actors.length > 0" class="actors-container">
         <div
-          v-for="actor in filteredActors"
+          v-for="actor in actors.filter(
+            (actor) =>
+              actor.firstname.toLowerCase().includes(searchQuery.toLowerCase()) ||
+              actor.lastname.toLowerCase().includes(searchQuery.toLowerCase())
+          )"
           :key="actor.id"
           class="actor-card"
           @click="goToDetails(actor.id)"
         >
           <h3>{{ actor.firstname }} {{ actor.lastname }}</h3>
           <img v-if="actor.media" :src="actor.media" alt="Photo de l'acteur" />
+          <button class="green-button" @click="openEditModal(actor)">Modifier</button>
+          <button class="red-button" @click="openDeleteModal(actor)">Supprimer</button>
         </div>
       </div>
+
       <p v-else>Aucun acteur trouvé</p>
     </ActorCard>
+
+    <button class="green-button" @click="showAddModal = true">Ajouter un acteur</button>
+
+    <div v-if="showAddModal" class="modal">
+      <div class="modal-content">
+        <p>Ajouter un nouvel acteur :</p>
+        <input v-model="newActorFirstname" placeholder="Prénom" />
+        <input v-model="newActorLastname" placeholder="Nom" />
+        <button class="green-button" @click="addActor">Ajouter</button>
+        <button class="red-button" @click="showAddModal = false">Annuler</button>
+      </div>
+    </div>
+
+    <div v-if="showEditModal" class="modal">
+      <div class="modal-content">
+        <p>Modifier l'acteur :</p>
+        <input v-model="newActorFirstname" placeholder="Prénom" />
+        <input v-model="newActorLastname" placeholder="Nom" />
+        <button class="green-button" @click="updateActor">Modifier</button>
+        <button class="red-button" @click="showEditModal = false">Annuler</button>
+      </div>
+    </div>
+
+    <div v-if="showDeleteModal" class="modal">
+      <div class="modal-content">
+        <p>Êtes-vous sûr de vouloir supprimer cet acteur ?</p>
+        <button class="red-button" @click="deleteActor">Supprimer</button>
+        <button class="green-button" @click="showDeleteModal = false">Retour</button>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -84,6 +180,42 @@ h1 {
 .actor-card:hover {
   transform: scale(1.05);
   transition: transform 0.3s;
+}
+
+.red-button,
+.green-button {
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.red-button {
+  background: #ff4d4d;
+}
+
+.green-button {
+  background: #42b983;
+}
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
 }
 
 img {

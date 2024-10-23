@@ -9,7 +9,7 @@ const recup = ref([])
 const selectedCategory = ref(null)
 const newCategoryTitle = ref('')
 
-// Modal
+// Modals pour CRUD
 const showDeleteModal = ref(false)
 const showEditModal = ref(false)
 const showAddModal = ref(false)
