@@ -1,6 +1,19 @@
 <script lang="ts" setup>
-import { onMounted, ref, watchEffect } from 'vue'
+import { useAuthStore } from '../stores/auth'
+import { watchEffect } from 'vue'
 import { useRouter } from 'vue-router'
+
+const router = useRouter()
+const authStore = useAuthStore()
+
+const logout = () => {
+  authStore.logout()
+  router.push('/')
+}
+
+watchEffect(() => {
+  authStore.checkAuth()
+})
 </script>
 
 <template>
@@ -11,7 +24,10 @@ import { useRouter } from 'vue-router'
         <li><router-link to="/movies">Movies</router-link></li>
         <li><router-link to="/actors">Actor</router-link></li>
         <li><router-link to="/categories">Catégories</router-link></li>
-        <li>
+        <li v-if="authStore.isAuthenticated">
+          <router-link to="/" @click.prevent="logout">Déconnexion</router-link>
+        </li>
+        <li v-else>
           <router-link to="/connexion">Connexion</router-link>
         </li>
       </ul>
