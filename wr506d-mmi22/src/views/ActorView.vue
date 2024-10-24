@@ -10,8 +10,13 @@ const searchQuery = ref('')
 const router = useRouter()
 const newActorFirstname = ref('')
 const newActorLastname = ref('')
+const newActorNationality = ref('')
+const newActorGender = ref('M')
+const newActorDob = ref('')
+const newActorAwards = ref(0)
 
 const selectedActor = ref(null)
+const actorsList = ref([])
 const recup = ref([])
 
 // Modals pour CRUD
@@ -41,11 +46,20 @@ async function addActor() {
 
 async function updateActor() {
   try {
-    const response = await axios.put(
+    const response = await axios.patch(
       `http://symfony.mmi-troyes.fr:8319/api/actors/${selectedActor.value.id}`,
       {
         firstname: newActorFirstname.value,
-        lastname: newActorLastname.value
+        lastname: newActorLastname.value,
+        nationality: newActorNationality.value,
+        gender: newActorGender.value,
+        dob: newActorDob.value,
+        awards: newActorAwards.value
+      },
+      {
+        headers: {
+          'Content-Type': 'application/merge-patch+json'
+        }
       }
     )
     const index = actorsList.value.findIndex((actor) => actor.id === selectedActor.value.id)
@@ -53,6 +67,10 @@ async function updateActor() {
     selectedActor.value = null
     newActorFirstname.value = ''
     newActorLastname.value = ''
+    newActorNationality.value = ''
+    newActorGender.value = ''
+    newActorDob.value = ''
+    newActorAwards.value = 0
     showEditModal.value = false
   } catch (error) {
     console.error("Erreur lors de la modification de l'acteur : ", error)
@@ -74,6 +92,10 @@ function openEditModal(actor) {
   selectedActor.value = { ...actor }
   newActorFirstname.value = actor.firstname
   newActorLastname.value = actor.lastname
+  newActorNationality.value = actor.nationality
+  newActorGender.value = actor.gender
+  newActorDob.value = actor.dob
+  newActorAwards.value = actor.awards
   showEditModal.value = true
 
   // Vérifiez la présence de `createdAt`
@@ -157,6 +179,13 @@ function openDeleteModal(actor) {
         <p>Modifier l'acteur :</p>
         <input v-model="newActorFirstname" placeholder="Prénom" />
         <input v-model="newActorLastname" placeholder="Nom" />
+        <input v-model="newActorNationality" placeholder="Nationalité" />
+        <select v-model="newActorGender">
+          <option value="M">Homme</option>
+          <option value="F">Femme</option>
+        </select>
+        <input type="date" v-model="newActorDob" placeholder="Date de naissance" />
+        <input type="number" v-model="newActorAwards" placeholder="Récompenses" min="1" max="10" />
         <button class="green-button" @click="updateActor">Modifier</button>
         <button class="red-button" @click="showEditModal = false">Annuler</button>
       </div>
