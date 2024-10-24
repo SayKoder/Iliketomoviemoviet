@@ -53,12 +53,15 @@ async function updateCategory() {
 
     const updatedAt = new Date().toISOString()
 
-    const response = await axios.put(
+    const response = await axios.patch(
       `http://symfony.mmi-troyes.fr:8319/api/categories/${selectedCategory.value.id}`,
       {
-        titre: newCategoryTitle.value,
-        createdAt: selectedCategory.value.createdAt,
-        updated_at: updatedAt
+        titre: newCategoryTitle.value
+      },
+      {
+        headers: {
+          'Content-Type': 'application/merge-patch+json'
+        }
       }
     )
 

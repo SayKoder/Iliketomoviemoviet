@@ -12,13 +12,27 @@ import NavView from './components/NavView.vue'
   </main>
 </template>
 
-<style scoped>
+<style>
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: black;
+  color: white;
+  font-family: Arial, sans-serif;
+}
 header {
   line-height: 1.5;
 }
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+#app {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 </style>
