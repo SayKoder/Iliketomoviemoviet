@@ -19,6 +19,12 @@ watchEffect(() => {
 <template>
   <div class="wrapper">
     <nav>
+      <div class="logo-container">
+        <router-link to="/">
+          <img src="@/assets/logo_iltmm.png" alt="Logo ILTMM" class="logo-img" />
+        </router-link>
+      </div>
+      <div class="nav-links"></div>
       <ul>
         <li class="cyan"><router-link to="/" exact>Accueil</router-link></li>
         <li class="yellow"><router-link to="/movies">Movies</router-link></li>
@@ -42,6 +48,19 @@ watchEffect(() => {
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+nav {
+  display: flex;
+  align-items: center;
+}
+
+.logo-container {
+  margin-right: 20px;
+}
+
+.logo-container img.logo-img {
+  height: 130px;
 }
 
 nav ul {

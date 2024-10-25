@@ -130,7 +130,7 @@ function openDeleteModal(category) {
 
     <div v-if="filteredCategories.length > 0" class="category-container">
       <div v-for="category in filteredCategories" :key="category.id" class="category-card">
-        <h3>{{ category.titre }}</h3>
+        <h3 class="category-place">{{ category.titre }}</h3>
         <button class="green-button" @click="openEditModal(category)">Modifier</button>
         <button class="red-button" @click="openDeleteModal(category)">Supprimer</button>
       </div>
@@ -168,7 +168,6 @@ function openDeleteModal(category) {
 </template>
 
 <style scoped>
-
 .search-bar {
   width: 100%;
   padding: 10px;
@@ -196,10 +195,21 @@ function openDeleteModal(category) {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
   transition: transform 0.3s;
+  font-family: 'Fredoka One', cursive;
 }
 .category-card:hover {
   transform: scale(1.05);
   transition: transform 0.3s;
+}
+
+.category-place {
+  background-color: #147f26;
+  border-radius: 10px;
+  padding: 6px 12px;
+  display: inline-block;
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2);
+  color: white;
+  font-family: 'Fredoka One', cursive;
 }
 
 .red-button {
@@ -274,7 +284,7 @@ p {
 .yellow {
   background: linear-gradient(rgb(236, 192, 59), 45%, rgb(255, 95, 15));
   padding: 10px;
-  color:white;
+  color: white;
   background-size: cover;
   font-family: 'Fredoka One', cursive;
 }

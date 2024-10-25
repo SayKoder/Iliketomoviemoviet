@@ -16,7 +16,10 @@ const goToDetails2 = (movieId) => {
 
 <template>
   <div id="homepage">
-    <h1 class="yellow">Page d'accueil</h1>
+    <div class="container-text">
+      <h1 class="yellow">Page d'accueil</h1>
+    </div>
+
     <MovieCard v-slot="{ movies }">
       <div v-if="movies.length > 0" class="movies-container">
         <div
@@ -34,7 +37,10 @@ const goToDetails2 = (movieId) => {
       <p v-else>Aucun acteur trouvé</p>
     </MovieCard>
 
-    <h1 class="cyan">Les derniers Acteurs</h1>
+    <div class="container-text-sec">
+      <h1 class="cyan">Les derniers Acteurs</h1>
+    </div>
+
     <ActorCard v-slot="{ actors }">
       <div v-if="actors.length > 0" class="actor-container">
         <div
@@ -66,6 +72,12 @@ h1 {
   color: black;
   margin-bottom: 30px;
   text-align: center;
+}
+
+.containner-text {
+  background: linear-gradient(rgb(236, 192, 59), 45%, rgb(255, 95, 15));
+  text-align: center;
+  padding: 15px;
 }
 
 .movies-container {
@@ -160,6 +172,7 @@ h1.yellow {
   background: linear-gradient(rgb(236, 192, 59), 45%, rgb(255, 95, 15));
   padding: 10px;
   background-size: cover;
+  width: auto;
 }
 
 h1.cyan {
