@@ -118,7 +118,7 @@ function openDeleteModal(category) {
 
 <template>
   <div>
-    <h1>{{ message }}</h1>
+    <h1 class="yellow">{{ message }}</h1>
     <input
       type="text"
       v-model="searchQuery"
@@ -126,7 +126,7 @@ function openDeleteModal(category) {
       class="search-bar"
     />
 
-    <p>Liste des catégories :</p>
+    <p class="cyan">Liste des catégories :</p>
 
     <div v-if="filteredCategories.length > 0" class="category-container">
       <div v-for="category in filteredCategories" :key="category.id" class="category-card">
@@ -168,9 +168,6 @@ function openDeleteModal(category) {
 </template>
 
 <style scoped>
-h1 {
-  color: #42b983;
-}
 
 .search-bar {
   width: 100%;
@@ -194,7 +191,7 @@ h1 {
   font-size: 20px;
   flex-direction: column;
   max-width: 22%;
-  background-color: #f4f4f4;
+  background-color: #0f4a19;
   padding: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
@@ -272,5 +269,20 @@ h1 {
 
 p {
   font-size: 30px;
+}
+
+.yellow {
+  background: linear-gradient(rgb(236, 192, 59), 45%, rgb(255, 95, 15));
+  padding: 10px;
+  color:white;
+  background-size: cover;
+  font-family: 'Fredoka One', cursive;
+}
+
+.cyan {
+  background: linear-gradient(rgb(59, 215, 156), 45%, rgb(0, 173, 110));
+  padding: 10px;
+  background-size: cover;
+  font-family: 'Fredoka One', cursive;
 }
 </style>

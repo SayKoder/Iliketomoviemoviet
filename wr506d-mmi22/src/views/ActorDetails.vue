@@ -70,17 +70,19 @@ onMounted(async () => {
 
 <style scoped>
 h1 {
-  color: #42b983;
-  margin-bottom: 20px;
+  background: linear-gradient(rgb(236, 192, 59), 45%, rgb(255, 95, 15));
+  padding: 10px 15px;
+  border-radius: 30px;
+  color:black;
 }
 
 h2 {
-  color: #710f0f;
+  color: #ffffff;
   font-size: 50px;
 }
 
 button {
-  background-color: #42b983;
+  background: linear-gradient(rgb(59, 215, 156), 45%, rgb(0, 173, 110));
   color: white;
   padding: 15px 25px;
   font-size: 25px;
@@ -100,7 +102,7 @@ button:hover {
   flex-wrap: wrap;
   justify-content: space-between;
   width: 70%; /* 70% de la largeur de la page */
-  background-color: #f4f4f4;
+  background-color: #0d3914;
   padding: 20px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
@@ -155,6 +157,6 @@ li {
 
 .titre-movie {
   font-size: 20px;
-  color: #4b2109;
+  color: #ffffff;
 }
 </style>

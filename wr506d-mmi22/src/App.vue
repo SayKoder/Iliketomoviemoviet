@@ -21,7 +21,8 @@ body {
 }
 
 body {
-  background-color: black;
+  background: url('@/assets/background.jpg') no-repeat center center fixed;
+  background-size: cover;
   color: white;
   font-family: Arial, sans-serif;
 }

@@ -118,7 +118,7 @@ function openDeleteModal(actor) {
 
 <template>
   <div>
-    <h1>{{ message }}</h1>
+    <h1 class="yellow">{{ message }}</h1>
 
     <input
       type="text"
@@ -126,7 +126,7 @@ function openDeleteModal(actor) {
       placeholder="Rechercher un acteur..."
       class="search-bar"
     />
-    <p>Liste des acteurs :</p>
+    <p class="cyan">Liste des acteurs :</p>
 
     <ActorCard v-slot="{ actors }">
       <div v-if="actors.length > 0" class="actors-container">
@@ -139,7 +139,7 @@ function openDeleteModal(actor) {
           :key="actor.id"
           class="actor-card"
         >
-          <h3>{{ actor.firstname }} {{ actor.lastname }}</h3>
+          <h3 class="actor-place">{{ actor.firstname }} {{ actor.lastname }}</h3>
           <img
             v-if="actor.media"
             :src="actor.media"
@@ -151,7 +151,7 @@ function openDeleteModal(actor) {
         </div>
       </div>
 
-      <p v-else>Aucun acteur trouvé</p>
+      <p v-else class="cyan">Aucun acteur trouvé</p>
     </ActorCard>
 
     <button class="green-button" @click="showAddModal = true">Ajouter un acteur</button>
@@ -194,10 +194,6 @@ function openDeleteModal(actor) {
 </template>
 
 <style scoped>
-h1 {
-  color: #42b983;
-}
-
 .search-bar {
   width: 100%;
   padding: 10px;
@@ -206,6 +202,16 @@ h1 {
   border: 1px solid #ccc;
   border-radius: 5px;
 }
+
+.actor-place {
+  background-color: #147f26;
+  border-radius: 10px;
+  padding: 6px 12px;
+  display: inline-block;
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2);
+  color: white;
+  font-family: 'Fredoka One', cursive;
+}	
 
 .actors-container {
   display: flex;
@@ -219,7 +225,7 @@ h1 {
   justify-content: space-between;
   flex-wrap: wrap;
   max-width: 22%;
-  background-color: #f4f4f4;
+  background-color: #0d3914;
   padding: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
@@ -275,5 +281,20 @@ img {
 
 p {
   font-size: 30px;
+}
+
+.yellow {
+  background: linear-gradient(rgb(236, 192, 59), 45%, rgb(255, 95, 15));
+  padding: 10px;
+  color:white;
+  background-size: cover;
+  font-family: 'Fredoka One', cursive;
+}
+
+.cyan {
+  background: linear-gradient(rgb(59, 215, 156), 45%, rgb(0, 173, 110));
+  padding: 10px;
+  background-size: cover;
+  font-family: 'Fredoka One', cursive;
 }
 </style>

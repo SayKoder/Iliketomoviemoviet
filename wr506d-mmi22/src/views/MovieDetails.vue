@@ -43,7 +43,7 @@ onMounted(async () => {
 <template>
   <div>
     <button @click="$router.go(-1)">Retour</button>
-    <h1>{{ message }}</h1>
+    <h1 class="yellow">{{ message }}</h1>
     <div class="detailMovie" v-if="movieDetails">
       <div class="left-column">
         <h2>{{ movieDetails.title }}</h2>
@@ -73,18 +73,23 @@ onMounted(async () => {
 </template>
 
 <style scoped>
+@import url('https://fonts.googleapis.com/css2?family=Fredoka+One&family=Baloo&display=swap');
+
 h1 {
-  color: #42b983;
+  color: #000000;
+  background: linear-gradient(rgb(236, 192, 59), 45%, rgb(255, 95, 15));
+  padding: 10px 15px;
+  border-radius: 30px;
 }
 
 h2 {
-  color: #710f0f;
+  color: #ffffff;
   font-size: 50px;
 }
 
 button {
-  background-color: #42b983;
-  color: white;
+  background: linear-gradient(rgb(59, 215, 156), 45%, rgb(0, 173, 110));
+  color: black;
   padding: 15px 25px;
   font-size: 25px;
   border: none;
@@ -95,18 +100,18 @@ button {
 }
 
 button:hover {
-  background-color: red; /* Couleur de fond rouge au survol */
+  background-color: red; 
 }
 
 .detailMovie {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  width: 70%; /* 70% de la largeur de la page */
-  background-color: #f4f4f4;
+  width: 70%; 
+  background-color: #0d3914;
   padding: 20px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  border-radius: 8px;
+  border-radius: 16px;
   transition: transform 0.3s;
   margin: auto;
 }
@@ -158,6 +163,6 @@ li {
 
 .titre-actor {
   font-size: 20px;
-  color: #4b2109;
+  color: #ffffff;
 }
 </style>
