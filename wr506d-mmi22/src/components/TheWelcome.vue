@@ -16,7 +16,7 @@ const goToDetails2 = (movieId) => {
 
 <template>
   <div id="homepage">
-    <h1>Page d'accueil</h1>
+    <h1 class="yellow">Page d'accueil</h1>
     <MovieCard v-slot="{ movies }">
       <div v-if="movies.length > 0" class="movies-container">
         <div
@@ -25,7 +25,7 @@ const goToDetails2 = (movieId) => {
           class="movie-card"
           @click="goToDetails2(movie.id)"
         >
-          <h2>{{ movie.title }}</h2>
+          <h2 class="movie-place">{{ movie.title }}</h2>
           <img v-if="movie.media" :src="movie.media" alt="Affiche du film" />
           <p>{{ movie.description }}</p>
         </div>
@@ -34,7 +34,7 @@ const goToDetails2 = (movieId) => {
       <p v-else>Aucun acteur trouvé</p>
     </MovieCard>
 
-    <h1>Les derniers Acteurs</h1>
+    <h1 class="cyan">Les derniers Acteurs</h1>
     <ActorCard v-slot="{ actors }">
       <div v-if="actors.length > 0" class="actor-container">
         <div
@@ -43,25 +43,27 @@ const goToDetails2 = (movieId) => {
           class="actor-card"
           @click="goToDetails(actor.id)"
         >
-          <h2>{{ actor.firstname }} {{ actor.lastname }}</h2>
+          <h2 class="actor-place">{{ actor.firstname }} {{ actor.lastname }}</h2>
           <img v-if="actor.media" :src="actor.media" alt="Photo de l'acteur" />
         </div>
       </div>
 
-      <p v-else>Aucun acteur trouvé</p>
+      <p class="cyan" v-else>Aucun acteur trouvé</p>
     </ActorCard>
     <MovieCard v-if="selectedActor" :actor="selectedActor" />
   </div>
 </template>
 
 <style scoped>
+@import url('https://fonts.googleapis.com/css2?family=Fredoka+One&family=Baloo&display=swap');
+
 #lit {
   padding: 20px;
   text-align: center;
 }
 
 h1 {
-  color: #e78d26;
+  color: black;
   margin-bottom: 30px;
   text-align: center;
 }
@@ -76,16 +78,26 @@ h1 {
 .movie-card {
   flex: 1;
   max-width: 22%;
-  background-color: #f4f4f4;
-  padding: 10px;
+  background-color: #0f4a19;
+  padding: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  border-radius: 8px;
+  border-radius: 30px;
   text-align: center;
   transition: transform 0.3s;
 }
 .movie-card:hover {
   transform: scale(1.05);
   transition: transform 0.3s;
+}
+
+.movie-place {
+  background-color: #147f26;
+  border-radius: 10px;
+  padding: 6px 12px;
+  display: inline-block;
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2);
+  color: white;
+  font-family: 'Fredoka One', cursive;
 }
 
 .actor-container {
@@ -98,7 +110,7 @@ h1 {
 .actor-card {
   flex: 1;
   max-width: 22%;
-  background-color: #f4f4f4;
+  background-color: #0d3914;
   padding: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
@@ -108,6 +120,11 @@ h1 {
 .actor-card:hover {
   transform: scale(1.05);
   transition: transform 0.3s;
+}
+
+.actor-card h2 {
+  font-family: 'Fredoka One', cursive;
+  color: black;
 }
 
 h2 {
@@ -124,6 +141,30 @@ img {
 
 p {
   font-size: 12px;
-  color: #666;
+  font-family:
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    Roboto,
+    Oxygen,
+    Ubuntu,
+    Cantarell,
+    'Open Sans',
+    'Helvetica Neue',
+    sans-serif;
+  color: #f3f3f3;
+}
+
+h1.yellow {
+  background: linear-gradient(rgb(236, 192, 59), 45%, rgb(255, 95, 15));
+  padding: 10px;
+  background-size: cover;
+}
+
+h1.cyan {
+  background: linear-gradient(rgb(59, 215, 156), 45%, rgb(0, 173, 110));
+  padding: 10px;
+  background-size: cover;
 }
 </style>

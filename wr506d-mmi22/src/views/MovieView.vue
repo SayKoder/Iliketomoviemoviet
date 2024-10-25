@@ -47,7 +47,7 @@ const changePage = (page) => {
 
 <template>
   <div>
-    <h1>{{ message }}</h1>
+    <h1 class="cyan">{{ message }}</h1>
 
     <input
       type="text"
@@ -55,7 +55,7 @@ const changePage = (page) => {
       placeholder="Rechercher un film..."
       class="search-bar"
     />
-    <p>Liste des films :</p>
+    <p class="yellow">Liste des films :</p>
 
     <MovieCard v-slot="{ movies: paginatedMovies }">
       <div v-if="paginatedMovies.length > 0" class="movies-container">
@@ -65,7 +65,7 @@ const changePage = (page) => {
           class="movie-card"
           @click="goToDetails(movie.id)"
         >
-          <h3>{{ movie.title }}</h3>
+          <h3 class="movie-place">{{ movie.title }}</h3>
           <img v-if="movie.media" :src="movie.media" alt="Affiche du film" />
           <p>{{ movie.description }}</p>
         </div>
@@ -86,10 +86,6 @@ const changePage = (page) => {
 </template>
 
 <style scoped>
-/* Styles inchangés */
-h1 {
-  color: #42b983;
-}
 
 .search-bar {
   width: 100%;
@@ -100,6 +96,15 @@ h1 {
   border-radius: 5px;
 }
 
+.movie-place{
+  background-color: #147f26;
+  border-radius: 10px;
+  padding: 6px 12px;
+  display: inline-block;
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2);
+  color: white;
+  font-family: 'Fredoka One', cursive;
+}
 .movies-container {
   display: flex;
   justify-content: space-between;
@@ -112,7 +117,7 @@ h1 {
   justify-content: space-between;
   flex-wrap: wrap;
   max-width: 22%;
-  background-color: #f4f4f4;
+  background-color: #0d3914;
   padding: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
@@ -136,6 +141,18 @@ img {
 
 p {
   font-size: 30px;
+  font-family:
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    Roboto,
+    Oxygen,
+    Ubuntu,
+    Cantarell,
+    'Open Sans',
+    'Helvetica Neue',
+    sans-serif;
 }
 
 .pagination {
@@ -163,5 +180,20 @@ p {
 
 .pagination span {
   margin: 0 10px;
+}
+
+.yellow {
+  background: linear-gradient(rgb(236, 192, 59), 45%, rgb(255, 95, 15));
+  padding: 10px;
+  color:white;
+  background-size: cover;
+  font-family: 'Fredoka One', cursive;
+}
+
+.cyan {
+  background: linear-gradient(rgb(59, 215, 156), 45%, rgb(0, 173, 110));
+  padding: 10px;
+  background-size: cover;
+  font-family: 'Fredoka One', cursive;
 }
 </style>
